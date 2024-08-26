@@ -1,0 +1,22 @@
+$border-color: #7c7c7c;
+$border-shadow: #fff;
+
+.tab-item {
+  background-size: 20px 20px;
+  padding-left: 28px;
+  /* padding-right: 5px; */
+  text-align: left;
+  height: 29px;
+  width: 300px;
+  margin: 2px 3px;
+  font-weight: bold;
+  border: 2px solid $border-color;
+  border-top-color: $border-shadow;
+  border-left-color: $border-shadow;
+}
+
+.isClick {
+  border: 2px solid $border-color;
+  border-bottom-color: $border-shadow;
+  border-right-color: $border-shadow;
+}

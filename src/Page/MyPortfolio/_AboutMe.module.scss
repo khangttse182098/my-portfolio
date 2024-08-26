@@ -1,0 +1,144 @@
+@import "../../fonts";
+
+$gap: 0px;
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+.container {
+  font-family: $window-old-font;
+  font-size: 25px;
+  height: 100%;
+}
+.content-links {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4%;
+  margin-left: 5%;
+  width: 16%;
+  height: 100%;
+  padding-top: 5%;
+  padding-right: 5%;
+  border-right: 2px #7c7c7c solid;
+  z-index: 2;
+  background-color: #c0c0c0;
+  a {
+    color: #8862ae;
+    z-index: 1000;
+    cursor: url(/hover.cur), auto;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+.isSelect {
+  transform: translate(-15%);
+}
+.main-content {
+  font-family: $fraunces-font;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content-body {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.main-content-header {
+  display: inline-block;
+  font-weight: 800;
+  padding-left: 2%;
+}
+.main-content-introduction-text {
+  font-size: 100px;
+  height: 100%;
+  div {
+    overflow: hidden;
+    user-select: none;
+    display: flex;
+    white-space: nowrap;
+    height: 25%;
+    ul {
+      list-style: none;
+      flex-shrink: 0;
+      min-width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: $gap;
+    }
+    &:nth-of-type(1) {
+      background-color: #9fc2cc;
+      font-family: $dirty-line-font;
+      font-size: 83px;
+      color: #982649;
+      ul {
+        animation: textScroll 6s linear infinite;
+      }
+    }
+    &:nth-of-type(2) {
+      background-color: #f1ecce;
+      font-family: $neue-font;
+      font-size: 80px;
+      color: #2274a5;
+      ul {
+        white-space: nowrap;
+        animation: textScroll 3s linear infinite reverse;
+      }
+    }
+    &:nth-of-type(3) {
+      font-size: 100px;
+      background-color: #df2935;
+      font-family: $nighty-font;
+      color: #fdca40;
+      ul {
+        animation: textScroll 2s linear infinite;
+      }
+    }
+    &:nth-of-type(4) {
+      font-size: 100px;
+      background-color: #274029;
+      font-family: $coffee-kan-font;
+      color: #e0b0d5;
+      font-weight: 800;
+      ul {
+        animation: textScroll 10s linear infinite reverse;
+      }
+    }
+  }
+}
+.main-content-bio {
+  margin-top: 3%;
+  margin-left: 3%;
+  font-family: $window-old-font;
+  font-size: 30px;
+}
+.main-content-bio-header {
+  font-size: 40px;
+  font-weight: bolder;
+  color: #8862ae;
+}
+.main-content-bio-img-wrapper {
+  position: relative;
+  width: 50%;
+  margin-top: 2%;
+}
+.main-content-bio-img-info {
+  text-align: center;
+  font-style: italic;
+  font-size: 20px;
+}
+
+.website-is-building {
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+@keyframes textScroll {
+  to {
+    transform: translateX(calc(-100% - $gap));
+  }
+}

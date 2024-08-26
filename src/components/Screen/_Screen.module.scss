@@ -1,0 +1,9 @@
+@import "../../fonts";
+
+.screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: #008080;
+  overflow: hidden;
+  font-family: $window-old-font;
+}

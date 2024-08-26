@@ -1,0 +1,66 @@
+@import "../../fonts";
+@import "../../function";
+
+.window-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  user-select: none;
+  gap: responsive-calc(120);
+}
+
+.content {
+  &-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: responsive-calc(65);
+    font-weight: 800;
+    transform: translate(responsive-calc(400), 0);
+  }
+  &-title-wrapper {
+    position: relative;
+    display: inline;
+    width: 100%;
+    // text-align: center;
+  }
+  &-links {
+    font-size: responsive-calc(35);
+    display: flex;
+    justify-content: center;
+    font-weight: 200;
+    font-family: $window-old-font;
+    gap: 2%;
+    a {
+      color: #8862ae;
+      z-index: 1000;
+      cursor: url(/hover.cur), auto;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      &:visited {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.font {
+  &-fill {
+    font-family: $barber-font-fill;
+    color: #bf342d;
+  }
+  &-outline {
+    font-family: $barber-font-outline;
+    color: #e9d6b5;
+  }
+  &-right {
+    font-family: $barber-font-right;
+    color: #b0884e;
+  }
+  &-shadow {
+    font-family: $barber-font-shadow;
+    color: #9b7545;
+  }
+}

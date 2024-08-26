@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "fraunces";
+  src: url("/font/Fraunces.ttf");
+  font-weight: normal;
+  font-style: normal;
+  // font-display: block;
+}
+@font-face {
+  font-family: "windowOldFont";
+  src: url("/font/WindowsRegular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "barberFontFill";
+  src: url("/font/Barber-Fill.woff2") format("woff2");
+}
+@font-face {
+  font-family: "barberFontOutline";
+  src: url("/font/Barber-Outline.woff2") format("woff2");
+}
+@font-face {
+  font-family: "barberFontRight";
+  src: url("/font/Barber-Right.woff2") format("woff2");
+}
+@font-face {
+  font-family: "barberFontShadow";
+  src: url("/font/Barber-Shadow.woff2") format("woff2");
+}
+@font-face {
+  font-family: "dirtyLine";
+  src: url("/font/Dirtyline36daysoftype2022.woff2") format("woff2");
+  font-stretch: condensed;
+}
+@font-face {
+  font-family: "neue";
+  src: url("/font/NeueMetanaNext-SemiBold.otf");
+}
+@font-face {
+  font-family: "nighty";
+  src: url("/font/Nightydemo.otf");
+}
+@font-face {
+  font-family: "coffeeKan";
+  src: url("/font/CoffekanRegular.ttf");
+}
+
+$window-old-font: "windowOldFont", san-serif;
+$fraunces-font: "fraunces", san-serif;
+$barber-font-fill: "barberFontFill", san-serif;
+$barber-font-outline: "barberFontOutline", san-serif;
+$barber-font-right: "barberFontRight", san-serif;
+$barber-font-shadow: "barberFontShadow", san-serif;
+$dirty-line-font: "dirtyLine", san-serif;
+$neue-font: "neue", san-serif;
+$nighty-font: "nighty", san-serif;
+$coffee-kan-font: "coffeeKan", san-serif;
