@@ -1,43 +1,21 @@
-import { useContext } from "react";
 import Screen from "./components/Screen/Screen";
-import { ScreenContext } from "./context/ScreenContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MyPortfolioMenu from "./Page/MyPortfolio/MyPortfolioMenu";
 import AboutMe from "./Page/MyPortfolio/AboutMe";
 import Window from "./components/Window/Window";
+import useScreenStore from "./store/useScreenStore";
 
 const App = (): JSX.Element => {
   const clickAudio = new Audio("/sound/click.mp3");
-  const {
-    setDesktopIconList,
-    desktopIconList,
-    setIsClickStartButton,
-    isClickStartButton,
-  } = useContext(ScreenContext);
+  const clickEmptyScreen = useScreenStore((state) => state.clickEmptyScreen);
 
   const handleMouseDown = () => {
     clickAudio.currentTime = 0;
     clickAudio.play();
   };
-  const handleClick = () => {
-    if (isClickStartButton) {
-      setIsClickStartButton(false);
-    }
-    setDesktopIconList(
-      desktopIconList.map((desktopIcon) => {
-        if (desktopIcon.isClick) {
-          return { ...desktopIcon, ["isPending"]: true, ["isClick"]: false };
-        }
-        if (desktopIcon.isPending) {
-          return { ...desktopIcon, ["isPending"]: false };
-        }
-        return desktopIcon;
-      })
-    );
-  };
 
   return (
-    <div onClick={handleClick} onMouseDownCapture={handleMouseDown}>
+    <div onClick={clickEmptyScreen} onMouseDownCapture={handleMouseDown}>
       <Router>
         <Routes>
           <Route path="/" element={<Screen />}>
