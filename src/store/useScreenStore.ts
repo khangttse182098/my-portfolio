@@ -60,7 +60,7 @@ const useScreenStore = create<ScreenStore>((set) => ({
     })),
   clickDesktopIcon: (img: String) =>
     set((state: ScreenStore) => ({
-      isClickStartButton: state.isClickStartButton ? false : true,
+      isClickStartButton: state.isClickStartButton || false,
       desktopIconList: state.desktopIconList.map((desktopIcon) => {
         if (desktopIcon.img === img) {
           return { ...desktopIcon, ["isClick"]: true };
