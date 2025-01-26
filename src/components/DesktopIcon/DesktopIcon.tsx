@@ -2,8 +2,9 @@ import classes from "./_DesktopIcon.module.scss";
 import { useNavigate } from "react-router-dom";
 import useScreenStore, { DesktopIconType } from "../../store/useScreenStore";
 const DesktopIcon = ({ img, name, isClick, isPending }: DesktopIconType) => {
-  const { clickDesktopIcon, openedTabList, doubleClickDesktopIcon } =
-    useScreenStore((state) => state);
+  const { clickDesktopIcon, doubleClickDesktopIcon } = useScreenStore(
+    (state) => state
+  );
   const navigate = useNavigate();
   const handleDoubleClick = () => {
     if (name === "My Portfolio") {

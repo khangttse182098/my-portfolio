@@ -1,4 +1,4 @@
-import { DesktopIconType } from "../../context/ScreenContext";
+import { DesktopIconType } from "../../store/useScreenStore";
 import classes from "./_Tab.module.scss";
 const Tab = ({ name, img, isClick }: Omit<DesktopIconType, "isPending">) => {
   return (
