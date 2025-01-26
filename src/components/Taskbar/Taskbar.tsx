@@ -1,19 +1,14 @@
 import classes from "./_Taskbar.module.scss";
-import { ScreenContext } from "../../context/ScreenContext";
 import { useContext } from "react";
 import Tab from "../Tab/Tab";
 import { OpenedTabType, WindowContext } from "../../context/WindowContext";
+import useScreenStore from "../../store/useScreenStore";
 const Taskbar = () => {
-  const { isClickStartButton, setIsClickStartButton } =
-    useContext(ScreenContext);
+  const isClickStartButton = useScreenStore(
+    (state) => state.isClickStartButton
+  );
+  const clickStartButton = useScreenStore((state) => state.clickStartButton);
   const { openedTabList, setOpenedTabList } = useContext(WindowContext);
-  const handleToggleDialog = () => {
-    if (!isClickStartButton) {
-      setIsClickStartButton(true);
-    } else {
-      setIsClickStartButton(false);
-    }
-  };
 
   const handleClickTab = (selectedTab: OpenedTabType) => {
     setOpenedTabList((prev) => [
@@ -33,7 +28,7 @@ const Taskbar = () => {
       <div className={classes.taskbar}>
         <div>
           <button
-            onClick={handleToggleDialog}
+            onClick={clickStartButton}
             className={`${classes["start-button"]} ${
               isClickStartButton ? classes.isClick : ""
             }`}
