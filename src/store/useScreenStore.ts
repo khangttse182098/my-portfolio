@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export interface DesktopIcon {
+export interface DesktopIconType {
   img: string;
   name: string;
   isClick: boolean;
@@ -8,7 +8,7 @@ export interface DesktopIcon {
 }
 
 interface ScreenStore {
-  desktopIconList: DesktopIcon[];
+  desktopIconList: DesktopIconType[];
   isClickStartButton: boolean;
   clickStartButton: () => void;
   clickDesktopIcon: (img: string) => void;
@@ -60,6 +60,7 @@ const useScreenStore = create<ScreenStore>((set) => ({
     })),
   clickDesktopIcon: (img: String) =>
     set((state: ScreenStore) => ({
+      isClickStartButton: state.isClickStartButton ? false : true,
       desktopIconList: state.desktopIconList.map((desktopIcon) => {
         if (desktopIcon.img === img) {
           return { ...desktopIcon, ["isClick"]: true };
