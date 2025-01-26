@@ -28,7 +28,9 @@ const Taskbar = () => {
       <div className={classes.taskbar}>
         <div>
           <button
-            onClick={clickStartButton}
+            onClick={(event) => {
+              clickStartButton(), event.stopPropagation();
+            }}
             className={`${classes["start-button"]} ${
               isClickStartButton ? classes.isClick : ""
             }`}
