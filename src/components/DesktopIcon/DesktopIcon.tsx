@@ -1,11 +1,9 @@
-import { useContext } from "react";
 import classes from "./_DesktopIcon.module.scss";
-import { WindowContext } from "../../context/WindowContext";
 import { useNavigate } from "react-router-dom";
 import useScreenStore, { DesktopIconType } from "../../store/useScreenStore";
 const DesktopIcon = ({ img, name, isClick, isPending }: DesktopIconType) => {
-  const clickDesktopIcon = useScreenStore((state) => state.clickDesktopIcon);
-  const { setOpenedTabList, openedTabList } = useContext(WindowContext);
+  const { clickDesktopIcon, openedTabList, doubleClickDesktopIcon } =
+    useScreenStore((state) => state);
   const navigate = useNavigate();
   const handleDoubleClick = () => {
     if (name === "My Portfolio") {
@@ -19,23 +17,7 @@ const DesktopIcon = ({ img, name, isClick, isPending }: DesktopIconType) => {
       isClick: true,
       isMaximize: false,
     };
-    if (
-      !openedTabList.filter((tab) => tab.tabImg === img).length ||
-      !openedTabList.length
-    ) {
-      setOpenedTabList((prev) => [...prev, tabItem]);
-    }
-    setOpenedTabList((prev) => [
-      ...prev.map((tab) => {
-        if (tab.isClick === true && tab.tabName !== name) {
-          return { ...tab, ["isClick"]: false };
-        }
-        if (tab.tabName === name && !tab.isClick) {
-          return { ...tab, ["isClick"]: true };
-        }
-        return tab;
-      }),
-    ]);
+    doubleClickDesktopIcon(tabItem);
     //NAVIGATE
     if (name === "My Portfolio") {
       navigate("/portfolio/content");
