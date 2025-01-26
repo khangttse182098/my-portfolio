@@ -4,9 +4,9 @@ import { WindowContext } from "../../context/WindowContext";
 // import MyPortfolioMenu from "../../Page/MyPortfolio/MyPortfolioMenu";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useTab } from "../Screen/Screen";
-const Window = () => {
-  const { setOpenedTabList } = useContext(WindowContext);
+const Window = (): JSX.Element => {
   const navigate = useNavigate();
+  const { setOpenedTabList } = useContext(WindowContext);
   const tab = useTab();
   const handleClose = () => {
     setOpenedTabList((prev) =>

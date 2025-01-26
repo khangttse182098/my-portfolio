@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import classes from "./_DesktopIcon.module.scss";
-import { DesktopIconType, ScreenContext } from "../../context/ScreenContext";
+import { ScreenContext } from "../../context/ScreenContext";
 import { WindowContext } from "../../context/WindowContext";
 import { useNavigate } from "react-router-dom";
-const DesktopIcon = ({ img, name, isClick, isPending }: DesktopIconType) => {
+const DesktopIcon = ({ img, name, isClick, isPending }) => {
   const { setOpenedTabList, openedTabList } = useContext(WindowContext);
   const navigate = useNavigate();
   const {

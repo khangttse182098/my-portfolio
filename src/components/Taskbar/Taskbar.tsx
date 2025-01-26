@@ -35,7 +35,7 @@ const Taskbar = () => {
           <button
             onClick={handleToggleDialog}
             className={`${classes["start-button"]} ${
-              isClickStartButton ? classes.isClick : undefined
+              isClickStartButton ? classes.isClick : ""
             }`}
           >
             Start
@@ -53,7 +53,7 @@ const Taskbar = () => {
           ))}
           <div
             className={`${classes["start-menu-wrapper"]} ${
-              !isClickStartButton ? classes.hidden : undefined
+              !isClickStartButton ? classes.hidden : ""
             }`}
           >
             <div className={classes["start-menu-title"]}>

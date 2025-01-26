@@ -6,8 +6,7 @@ import { WindowContext, OpenedTabType } from "../../context/WindowContext";
 import { Outlet, useOutletContext } from "react-router-dom";
 
 const Screen = (): JSX.Element => {
-  const { openedTabList }: { openedTabList: OpenedTabType[] } =
-    useContext(WindowContext);
+  const { openedTabList } = useContext(WindowContext);
   return (
     <div className={classes.screen}>
       <Taskbar />
