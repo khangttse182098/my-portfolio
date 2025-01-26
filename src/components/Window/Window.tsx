@@ -1,39 +1,40 @@
-import { useContext } from "react";
 import classes from "./_Window.module.scss";
-import { WindowContext } from "../../context/WindowContext";
 // import MyPortfolioMenu from "../../Page/MyPortfolio/MyPortfolioMenu";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useTab } from "../Screen/Screen";
+import useScreenStore from "../../store/useScreenStore";
 const Window = (): JSX.Element => {
-  const navigate = useNavigate();
-  const { setOpenedTabList } = useContext(WindowContext);
+  const { minimizeWindow, maximizeWindow, closeWindow } = useScreenStore(
+    (state) => state
+  );
+  // const navigate = useNavigate();
   const tab = useTab();
-  const handleClose = () => {
-    setOpenedTabList((prev) =>
-      prev.filter((currTab) => currTab.tabImg !== tab.tabImg)
-    );
-    navigate("/");
-  };
-  const handleMinimize = () => {
-    setOpenedTabList((prev) =>
-      prev.map((currTab) => {
-        if (currTab.tabImg === tab.tabImg) {
-          return { ...currTab, ["isClick"]: false };
-        }
-        return currTab;
-      })
-    );
-  };
-  const handleMaximize = () => {
-    setOpenedTabList((prev) =>
-      prev.map((currTab) => {
-        if (currTab.tabImg === tab.tabImg) {
-          return { ...currTab, ["isMaximize"]: !tab.isMaximize };
-        }
-        return currTab;
-      })
-    );
-  };
+  // const handleClose = () => {
+  //   setOpenedTabList((prev) =>
+  //     prev.filter((currTab) => currTab.tabImg !== tab.tabImg)
+  //   );
+  //   navigate("/");
+  // };
+  // const handleMinimize = () => {
+  // setOpenedTabList((prev) =>
+  //   prev.map((currTab) => {
+  //     if (currTab.tabImg === tab.tabImg) {
+  //       return { ...currTab, ["isClick"]: false };
+  //     }
+  //     return currTab;
+  //   })
+  // );
+  // };
+  // const handleMaximize = () => {
+  // setOpenedTabList((prev) =>
+  //   prev.map((currTab) => {
+  //     if (currTab.tabImg === tab.tabImg) {
+  //       return { ...currTab, ["isMaximize"]: !tab.isMaximize };
+  //     }
+  //     return currTab;
+  //   })
+  // );
+  // };
   return (
     <div className={`${tab.isMaximize ? classes.maximize : classes.window}`}>
       <div className={classes["window-info"]}>
@@ -50,15 +51,15 @@ const Window = (): JSX.Element => {
         </span>
         <div className={classes["traffic-light"]}>
           <button
-            onClick={handleMinimize}
+            onClick={() => minimizeWindow(tab)}
             className={`${classes["minimize-btn"]} ${classes["btn"]}`}
           ></button>
           <button
-            onClick={handleMaximize}
+            onClick={() => maximizeWindow(tab)}
             className={`${classes["maximize-btn"]} ${classes["btn"]}`}
           ></button>
           <button
-            onClick={handleClose}
+            onClick={() => closeWindow(tab)}
             className={`${classes["close-btn"]} ${classes["btn"]}`}
           ></button>
         </div>

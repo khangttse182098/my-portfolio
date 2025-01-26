@@ -1,5 +1,11 @@
 import { create } from "zustand";
 
+export interface OpenedTabType {
+  tabName: string;
+  tabImg: string;
+  isClick: boolean;
+  isMaximize: boolean;
+}
 export interface DesktopIconType {
   img: string;
   name: string;
@@ -10,9 +16,15 @@ export interface DesktopIconType {
 interface ScreenStore {
   desktopIconList: DesktopIconType[];
   isClickStartButton: boolean;
+  openedTabList: OpenedTabType[];
   clickStartButton: () => void;
   clickDesktopIcon: (img: string) => void;
   clickEmptyScreen: () => void;
+  doubleClickDesktopIcon: (currentTab: OpenedTabType) => void;
+  clickTabOnTaskbar: (selectedTab: OpenedTabType) => void;
+  closeWindow: (selectedTab: OpenedTabType) => void;
+  minimizeWindow: (selectedTab: OpenedTabType) => void;
+  maximizeWindow: (selectedTab: OpenedTabType) => void;
 }
 
 const initialDesktopIconListValue = [
@@ -45,6 +57,7 @@ const initialDesktopIconListValue = [
 const useScreenStore = create<ScreenStore>((set) => ({
   desktopIconList: initialDesktopIconListValue,
   isClickStartButton: false,
+  openedTabList: [],
   clickStartButton: () =>
     set((state: ScreenStore) => ({
       isClickStartButton: !state.isClickStartButton,
@@ -76,45 +89,102 @@ const useScreenStore = create<ScreenStore>((set) => ({
     })),
   clickEmptyScreen: () =>
     set((state: ScreenStore) => {
+      let newIsClickStartButton = state.isClickStartButton;
+      const newDesktopIconList = state.desktopIconList.map((desktopIcon) => {
+        if (desktopIcon.isClick) {
+          return {
+            ...desktopIcon,
+            isPending: true,
+            isClick: false,
+          };
+        }
+        if (desktopIcon.isPending) {
+          return { ...desktopIcon, isPending: false };
+        }
+        return desktopIcon;
+      });
+
       if (state.isClickStartButton) {
-        return {
-          isClickStartButton: !state.isClickStartButton,
-          desktopIconList: state.desktopIconList.map((desktopIcon) => {
-            if (desktopIcon.isClick) {
-              return {
-                ...desktopIcon,
-                ["isPending"]: true,
-                ["isClick"]: false,
-              };
-            }
-            if (desktopIcon.isPending) {
-              return { ...desktopIcon, ["isPending"]: false };
-            }
-            return desktopIcon;
-          }),
-        };
+        newIsClickStartButton = !state.isClickStartButton;
       } else {
-        return {
-          isClickStartButton: state.isClickStartButton,
-          desktopIconList: state.desktopIconList.map((desktopIcon) => {
-            if (desktopIcon.isClick) {
-              return {
-                ...desktopIcon,
-                ["isPending"]: true,
-                ["isClick"]: false,
-              };
-            }
-            if (desktopIcon.isPending) {
-              return { ...desktopIcon, ["isPending"]: false };
-            }
-            return desktopIcon;
-          }),
-        };
+        newIsClickStartButton = state.isClickStartButton;
       }
+
+      return {
+        desktopIconList: newDesktopIconList,
+        isClickStartButton: newIsClickStartButton,
+      };
     }),
-  // increasePopulation: () => set((state: any) => ({ bears: state.bears + 1 })),
-  // removeAllBears: () => set({ bears: 0 }),
-  // updateBears: (newBears: any) => set({ bears: newBears }),
+  doubleClickDesktopIcon: (currentTab: OpenedTabType) =>
+    set((state: ScreenStore) => {
+      let newOpenedTabList = [...state.openedTabList];
+
+      if (
+        !newOpenedTabList.filter((tab) => tab.tabImg === currentTab.tabImg)
+          .length ||
+        !newOpenedTabList.length
+      ) {
+        newOpenedTabList = [...newOpenedTabList, currentTab];
+      }
+      newOpenedTabList = [
+        ...newOpenedTabList.map((tab) => {
+          if (tab.isClick === true && tab.tabName !== currentTab.tabName) {
+            return { ...tab, ["isClick"]: false };
+          }
+          if (tab.tabName === currentTab.tabName && !tab.isClick) {
+            return { ...tab, ["isClick"]: true };
+          }
+          return tab;
+        }),
+      ];
+      return {
+        openedTabList: newOpenedTabList,
+      };
+    }),
+  clickTabOnTaskbar: (selectedTab: OpenedTabType) =>
+    set((state: ScreenStore) => {
+      let newOpenedTabList = [...state.openedTabList];
+
+      newOpenedTabList = [
+        ...newOpenedTabList.map((tab) => {
+          if (tab.tabName === selectedTab.tabName) {
+            return { ...tab, ["isClick"]: !selectedTab.isClick };
+          }
+          if (tab.isClick && tab.tabName !== selectedTab.tabName) {
+            return { ...tab, ["isClick"]: false };
+          }
+          return tab;
+        }),
+      ];
+
+      return {
+        openedTabList: newOpenedTabList,
+      };
+    }),
+  closeWindow: (selectedTab) =>
+    set((state: ScreenStore) => ({
+      openedTabList: state.openedTabList.filter(
+        (tab) => tab.tabImg !== selectedTab.tabImg
+      ),
+    })),
+  minimizeWindow: (selectedTab) =>
+    set((state: ScreenStore) => ({
+      openedTabList: state.openedTabList.map((tab) => {
+        if (tab.tabImg === selectedTab.tabImg) {
+          return { ...tab, ["isClick"]: false };
+        }
+        return selectedTab;
+      }),
+    })),
+  maximizeWindow: (selectedTab) =>
+    set((state: ScreenStore) => ({
+      openedTabList: state.openedTabList.map((tab) => {
+        if (tab.tabImg === selectedTab.tabImg) {
+          return { ...tab, ["isMaximize"]: !selectedTab.isMaximize };
+        }
+        return tab;
+      }),
+    })),
 }));
 
 export default useScreenStore;
