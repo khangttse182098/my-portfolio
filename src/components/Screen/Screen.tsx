@@ -1,12 +1,11 @@
-import { useContext } from "react";
+import useScreenStore, { OpenedTabType } from "../../store/useScreenStore";
 import DesktopIconList from "../DesktopIconList/DesktopIconList";
 import Taskbar from "../Taskbar/Taskbar";
 import classes from "./_Screen.module.scss";
-import { WindowContext, OpenedTabType } from "../../context/WindowContext";
 import { Outlet, useOutletContext } from "react-router-dom";
 
 const Screen = (): JSX.Element => {
-  const { openedTabList } = useContext(WindowContext);
+  const openedTabList = useScreenStore((state) => state.openedTabList);
   return (
     <div className={classes.screen}>
       <Taskbar />
