@@ -1,9 +1,8 @@
-import { useContext } from "react";
+import useScreenStore from "../../store/useScreenStore";
 import DesktopIcon from "../DesktopIcon/DesktopIcon";
-import { ScreenContext } from "../../context/ScreenContext";
 
 const DesktopIconList = (): JSX.Element => {
-  const { desktopIconList } = useContext(ScreenContext);
+  const desktopIconList = useScreenStore((state) => state.desktopIconList);
   return (
     <div className="desktop-icon-list">
       {desktopIconList.map((desktopIcon) => (
