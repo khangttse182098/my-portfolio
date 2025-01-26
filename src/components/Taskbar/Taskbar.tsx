@@ -1,28 +1,14 @@
 import classes from "./_Taskbar.module.scss";
-import { useContext } from "react";
 import Tab from "../Tab/Tab";
-import { OpenedTabType, WindowContext } from "../../context/WindowContext";
 import useScreenStore from "../../store/useScreenStore";
 const Taskbar = () => {
   const isClickStartButton = useScreenStore(
     (state) => state.isClickStartButton
   );
-  const clickStartButton = useScreenStore((state) => state.clickStartButton);
-  const { openedTabList, setOpenedTabList } = useContext(WindowContext);
+  const { clickStartButton, openedTabList, clickTabOnTaskbar } = useScreenStore(
+    (state) => state
+  );
 
-  const handleClickTab = (selectedTab: OpenedTabType) => {
-    setOpenedTabList((prev) => [
-      ...prev.map((tab) => {
-        if (tab.tabName === selectedTab.tabName) {
-          return { ...tab, ["isClick"]: !selectedTab.isClick };
-        }
-        if (tab.isClick && tab.tabName !== selectedTab.tabName) {
-          return { ...tab, ["isClick"]: false };
-        }
-        return tab;
-      }),
-    ]);
-  };
   return (
     <>
       <div className={classes.taskbar}>
@@ -42,7 +28,7 @@ const Taskbar = () => {
               key={tab.tabImg}
               onClick={(event) => {
                 event.stopPropagation();
-                handleClickTab(tab);
+                clickTabOnTaskbar(tab);
               }}
             >
               <Tab name={tab.tabName} img={tab.tabImg} isClick={tab.isClick} />
