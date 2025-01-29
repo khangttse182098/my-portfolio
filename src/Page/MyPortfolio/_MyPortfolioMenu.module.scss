@@ -14,17 +14,15 @@
 .content {
   &-title {
     position: absolute;
-    top: 0;
-    left: 0;
     font-size: responsive-calc(65);
     font-weight: 800;
-    transform: translate(responsive-calc(400), 0);
+    // transform: translate(responsive-calc(400), 0);
   }
   &-title-wrapper {
     position: relative;
-    display: inline;
+    display: flex;
+    justify-content: center;
     width: 100%;
-    // text-align: center;
   }
   &-links {
     font-size: responsive-calc(35);
