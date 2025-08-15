@@ -11,7 +11,7 @@ const Window = (): JSX.Element => {
   const tab = useTab();
 
   return (
-    <div className={`${tab.isMaximize ? classes.maximize : classes.window}`}>
+    <div className={`${tab.isMaximized ? classes.maximize : classes.window}`}>
       <div className={classes["window-info"]}>
         <span
           className={classes["title-bar"]}

@@ -1,7 +1,10 @@
 import classes from "./_DesktopIcon.module.scss";
 import { useNavigate } from "react-router-dom";
-import useScreenStore, { DesktopIconType } from "../../store/useScreenStore";
-const DesktopIcon = ({ img, name, isClick, isPending }: DesktopIconType) => {
+import useScreenStore, {
+  DesktopIconStatus,
+  DesktopIconType,
+} from "../../store/useScreenStore";
+const DesktopIcon = ({ img, name, status }: DesktopIconType) => {
   const { clickDesktopIcon, doubleClickDesktopIcon } = useScreenStore(
     (state) => state
   );
@@ -15,8 +18,8 @@ const DesktopIcon = ({ img, name, isClick, isPending }: DesktopIconType) => {
     const tabItem = {
       tabName: name,
       tabImg: img,
-      isClick: true,
-      isMaximize: false,
+      isClicked: true,
+      isMaximized: false,
     };
     doubleClickDesktopIcon(tabItem);
     //NAVIGATE
@@ -41,8 +44,14 @@ const DesktopIcon = ({ img, name, isClick, isPending }: DesktopIconType) => {
         onDoubleClick={handleDoubleClick}
       >
         <span
-          className={`${isClick ? classes["is-click"] : undefined} ${
-            isPending ? classes["pending-click"] : undefined
+          className={`${
+            status == DesktopIconStatus.isClicked
+              ? classes["is-click"]
+              : undefined
+          } ${
+            status == DesktopIconStatus.isPending
+              ? classes["pending-click"]
+              : undefined
           }`}
         >
           {name}

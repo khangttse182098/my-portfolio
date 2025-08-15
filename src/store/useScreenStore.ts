@@ -3,14 +3,19 @@ import { create } from "zustand";
 export interface OpenedTabType {
   tabName: string;
   tabImg: string;
-  isClick: boolean;
-  isMaximize: boolean;
+  isClicked: boolean;
+  isMaximized: boolean;
+}
+
+export enum DesktopIconStatus {
+  isClicked,
+  isPending,
+  normal,
 }
 export interface DesktopIconType {
   img: string;
   name: string;
-  isClick: boolean;
-  isPending: boolean;
+  status: DesktopIconStatus;
 }
 
 interface ScreenStore {
@@ -37,8 +42,7 @@ const initialDesktopIconListValue = [
   {
     img: "documents.png",
     name: "My Portfolio",
-    isClick: false,
-    isPending: false,
+    status: DesktopIconStatus.normal,
   },
   // {
   //   img: "network.png",
@@ -62,11 +66,11 @@ const useScreenStore = create<ScreenStore>((set) => ({
     set((state: ScreenStore) => ({
       isClickStartButton: !state.isClickStartButton,
       desktopIconList: state.desktopIconList.map((desktopIcon) => {
-        if (desktopIcon.isClick) {
-          return { ...desktopIcon, ["isPending"]: true, ["isClick"]: false };
+        if (desktopIcon.status == DesktopIconStatus.isClicked) {
+          return { ...desktopIcon, status: DesktopIconStatus.isPending };
         }
-        if (desktopIcon.isPending) {
-          return { ...desktopIcon, ["isPending"]: false };
+        if (desktopIcon.status == DesktopIconStatus.isPending) {
+          return { ...desktopIcon, status: DesktopIconStatus.normal };
         }
         return desktopIcon;
       }),
@@ -76,13 +80,16 @@ const useScreenStore = create<ScreenStore>((set) => ({
       isClickStartButton: state.isClickStartButton || false,
       desktopIconList: state.desktopIconList.map((desktopIcon) => {
         if (desktopIcon.img === img) {
-          return { ...desktopIcon, ["isClick"]: true };
+          return { ...desktopIcon, status: DesktopIconStatus.isClicked };
         }
-        if (desktopIcon.isClick && desktopIcon.img !== img) {
-          return { ...desktopIcon, ["isClick"]: false, ["isPending"]: true };
+        if (
+          desktopIcon.status == DesktopIconStatus.isClicked &&
+          desktopIcon.img !== img
+        ) {
+          return { ...desktopIcon, status: DesktopIconStatus.isPending };
         }
-        if (desktopIcon.isPending) {
-          return { ...desktopIcon, ["isPending"]: false };
+        if (desktopIcon.status == DesktopIconStatus.isPending) {
+          return { ...desktopIcon, status: DesktopIconStatus.normal };
         }
         return desktopIcon;
       }),
@@ -91,15 +98,14 @@ const useScreenStore = create<ScreenStore>((set) => ({
     set((state: ScreenStore) => {
       let newIsClickStartButton = state.isClickStartButton;
       const newDesktopIconList = state.desktopIconList.map((desktopIcon) => {
-        if (desktopIcon.isClick) {
+        if (desktopIcon.status == DesktopIconStatus.isClicked) {
           return {
             ...desktopIcon,
-            isPending: true,
-            isClick: false,
+            status: DesktopIconStatus.isPending,
           };
         }
-        if (desktopIcon.isPending) {
-          return { ...desktopIcon, isPending: false };
+        if (desktopIcon.status == DesktopIconStatus.isPending) {
+          return { ...desktopIcon, status: DesktopIconStatus.normal };
         }
         return desktopIcon;
       });
@@ -128,11 +134,11 @@ const useScreenStore = create<ScreenStore>((set) => ({
       }
       newOpenedTabList = [
         ...newOpenedTabList.map((tab) => {
-          if (tab.isClick === true && tab.tabName !== currentTab.tabName) {
-            return { ...tab, ["isClick"]: false };
+          if (tab.isClicked === true && tab.tabName !== currentTab.tabName) {
+            return { ...tab, isClicked: false };
           }
-          if (tab.tabName === currentTab.tabName && !tab.isClick) {
-            return { ...tab, ["isClick"]: true };
+          if (tab.tabName === currentTab.tabName && !tab.isClicked) {
+            return { ...tab, isClicked: true };
           }
           return tab;
         }),
@@ -148,10 +154,10 @@ const useScreenStore = create<ScreenStore>((set) => ({
       newOpenedTabList = [
         ...newOpenedTabList.map((tab) => {
           if (tab.tabName === selectedTab.tabName) {
-            return { ...tab, ["isClick"]: !selectedTab.isClick };
+            return { ...tab, isClicked: !selectedTab.isClicked };
           }
-          if (tab.isClick && tab.tabName !== selectedTab.tabName) {
-            return { ...tab, ["isClick"]: false };
+          if (tab.isClicked && tab.tabName !== selectedTab.tabName) {
+            return { ...tab, isClicked: false };
           }
           return tab;
         }),
@@ -171,7 +177,7 @@ const useScreenStore = create<ScreenStore>((set) => ({
     set((state: ScreenStore) => ({
       openedTabList: state.openedTabList.map((tab) => {
         if (tab.tabImg === selectedTab.tabImg) {
-          return { ...tab, ["isClick"]: false };
+          return { ...tab, isClicked: false };
         }
         return selectedTab;
       }),
@@ -180,7 +186,7 @@ const useScreenStore = create<ScreenStore>((set) => ({
     set((state: ScreenStore) => ({
       openedTabList: state.openedTabList.map((tab) => {
         if (tab.tabImg === selectedTab.tabImg) {
-          return { ...tab, ["isMaximize"]: !selectedTab.isMaximize };
+          return { ...tab, isMaximized: !selectedTab.isMaximized };
         }
         return tab;
       }),

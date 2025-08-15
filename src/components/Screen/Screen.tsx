@@ -11,7 +11,7 @@ const Screen = (): JSX.Element => {
       <Taskbar />
       <DesktopIconList />
       {openedTabList.map((tab) => {
-        if (tab.isClick) {
+        if (tab.isClicked) {
           // return <Window key={tab.tabName} tab={tab} />;
           return (
             <Outlet key={tab.tabName} context={tab satisfies OpenedTabType} />

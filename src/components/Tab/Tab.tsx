@@ -1,14 +1,18 @@
-import { DesktopIconType } from "../../store/useScreenStore";
+import { OpenedTabType } from "../../store/useScreenStore";
 import classes from "./_Tab.module.scss";
-const Tab = ({ name, img, isClick }: Omit<DesktopIconType, "isPending">) => {
+const Tab = ({
+  tabName,
+  tabImg,
+  isClicked: isClick,
+}: Omit<OpenedTabType, "isMaximized">) => {
   return (
     <button
       className={`${classes["tab-item"]} ${isClick ? classes.isClick : ""}`}
       style={{
-        background: `url(/${img}) no-repeat 2px center / 24px`,
+        background: `url(/${tabImg}) no-repeat 2px center / 24px`,
       }}
     >
-      {name}
+      {tabName}
     </button>
   );
 };

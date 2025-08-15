@@ -31,7 +31,11 @@ const Taskbar = () => {
                 clickTabOnTaskbar(tab);
               }}
             >
-              <Tab name={tab.tabName} img={tab.tabImg} isClick={tab.isClick} />
+              <Tab
+                tabName={tab.tabName}
+                tabImg={tab.tabImg}
+                isClicked={tab.isClicked}
+              />
             </span>
           ))}
           <div

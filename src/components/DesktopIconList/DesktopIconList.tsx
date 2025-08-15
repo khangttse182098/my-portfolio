@@ -10,8 +10,7 @@ const DesktopIconList = (): JSX.Element => {
           key={desktopIcon.img}
           img={desktopIcon.img}
           name={desktopIcon.name}
-          isClick={desktopIcon.isClick}
-          isPending={desktopIcon.isPending}
+          status={desktopIcon.status}
         />
       ))}
     </div>
